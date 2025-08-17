@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LDtk to TSCN Converter</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>LDtk to TSCN Converter</h1>
+        <p>Convert LDtk level data to Godot 4.3 TSCN tilemap format</p>
+      </header>
+
+      <div class="converter-interface">
+        <div class="file-inputs">
+          <div class="input-group">
+            <label for="ldtk-file">Select LDtk File (.ldtk)</label>
+            <input
+              type="file"
+              id="ldtk-file"
+              accept=".ldtk"
+              class="file-input"
+            />
+            <div class="file-status" id="ldtk-status">No file selected</div>
+          </div>
+        </div>
+
+        <div class="level-selector" id="level-selector" style="display: none">
+          <label for="level-select">Select Level to Convert:</label>
+          <select id="level-select" class="level-dropdown">
+            <option value="">Choose a level...</option>
+          </select>
+        </div>
+
+        <div
+          class="conversion-options"
+          id="conversion-options"
+          style="display: none"
+        >
+          <h3>Conversion Settings</h3>
+
+          <div class="option-group">
+            <label>
+              <input type="checkbox" id="include-collisions" checked />
+              Include Collisions Layer (Collisions_baked)
+            </label>
+          </div>
+          <div class="option-group">
+            <label>
+              <input type="checkbox" id="include-shadows" checked />
+              Include Wall Shadows Layer (Wall_shadows_baked)
+            </label>
+          </div>
+          <div class="option-group">
+            <label>
+              <input type="checkbox" id="include-background" checked />
+              Include Background Textures Layer (Bg_textures_baked)
+            </label>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button id="convert-btn" class="convert-button" disabled>
+            Convert to TSCN
+          </button>
+        </div>
+
+        <div
+          class="progress-indicator"
+          id="progress-indicator"
+          style="display: none"
+        >
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="progress-text" id="progress-text">Processing...</div>
+        </div>
+
+        <div class="output-section" id="output-section" style="display: none">
+          <h3>Conversion Results</h3>
+          <div class="result-info" id="result-info"></div>
+          <button id="download-btn" class="download-button">
+            Download TSCN File
+          </button>
+        </div>
+      </div>
+
+      <div class="info-panel">
+        <h3>Supported Features</h3>
+        <ul>
+          <li>
+            Converts LDtk gridTiles to Godot 4.3 TileMap format
+          </li>
+          <li>Supports SunnyLand_by_Ansimuz tileset</li>
+          <li>
+            Handles Collisions_baked, Wall_shadows_baked, and Bg_textures_baked
+            layers
+          </li>
+          <li>Preserves tile positioning and transformations</li>
+          <li>Generates Godot 4.3 compatible TSCN structure</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Load scripts in correct order -->
+    <script src="js/utils.js"></script>
+    <script src="js/tilesetMapper.js"></script>
+    <script src="js/ldtkParser.js"></script>
+    <script src="js/tscnGenerator.js"></script>
+    <script src="js/uiManager.js"></script>
+    <script src="js/fileHandler.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

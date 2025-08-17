@@ -1,0 +1,38 @@
+{
+  "name": "ldtk-tscn-converter",
+  "version": "1.0.0",
+  "description": "Convert LDtk level data to Godot 4.3 TSCN tilemap format with intelligent tile mapping",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -s . -l 9901",
+    "dev": "serve -s . -l 9901 --live",
+    "build": "echo 'No build process needed for this static app'",
+    "serve": "npm start"
+  },
+  "keywords": [
+    "ldtk",
+    "godot",
+    "converter",
+    "tilemap",
+    "game-development",
+    "tscn"
+  ],
+  "author": "Michal Zagrodzki",
+  "license": "MIT",
+  "dependencies": {
+    "serve": "^14.2.1"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=22.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "your-repo-url-here"
+  },
+  "bugs": {
+    "url": "http://url"
+  },
+  "homepage": "http://url"
+}
