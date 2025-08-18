@@ -7,6 +7,14 @@ class TilesetMapper {
         // Initialize tileset mappings based on analysis of existing files
         this.tilesetMappings = new Map();
         this.setupSunnyLandMapping();
+
+        // Godot 4.x TileMap tile_data flag bits (for 3rd int):
+        // Lower 16 bits: alternative ID (we use atlasY)
+        // Bit 29: horizontal flip, Bit 30: vertical flip, Bit 31: transpose
+        this.ALT_MASK = 0x0000ffff;
+        this.BIT_FLIP_H = 1 << 29;
+        this.BIT_FLIP_V = 1 << 30;
+        this.BIT_TRANSPOSE = 1 << 31;
     }
 
     /**
@@ -53,11 +61,19 @@ class TilesetMapper {
     // Removed bespoke SunnyLand atlas mapping; generic mapping is sufficient.
 
     /**
-     * Compute alternative tile index. We align with the existing good outputs:
-     * alternative = atlasY. Flip flags are currently not encoded as alternatives.
+     * Compute alternative integer for TileMap:
+     * - Lower 16 bits store alternative index. In our atlas mapping, this is atlasY.
+     * - High bits encode transforms, if any: flipH, flipV, transpose.
      */
-    getAlternativeTileId(_flipFlags, _atlasX, atlasY) {
-        return Math.max(0, atlasY);
+    getAlternativeTileId(flipFlags, _atlasX, atlasY) {
+        let alt = Math.max(0, atlasY) & this.ALT_MASK;
+
+        if (flipFlags && flipFlags.flipH) alt |= this.BIT_FLIP_H;
+        if (flipFlags && flipFlags.flipV) alt |= this.BIT_FLIP_V;
+        // LDtk doesn't provide transpose; if needed, we could infer rotations.
+        // if (flipFlags.transpose) alt |= this.BIT_TRANSPOSE;
+
+        return alt;
     }
 
     /**
