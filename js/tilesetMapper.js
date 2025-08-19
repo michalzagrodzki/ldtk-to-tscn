@@ -8,13 +8,16 @@ class TilesetMapper {
         this.tilesetMappings = new Map();
         this.setupSunnyLandMapping();
 
-        // Godot 4.x TileMap tile_data flag bits (for 3rd int):
-        // Lower 16 bits: alternative ID (we use atlasY)
-        // Bit 29: horizontal flip, Bit 30: vertical flip, Bit 31: transpose
+        // Godot 4.x TileMap tile_data flag bits (3rd int, format=2):
+        // - Lower 16 bits: alternative ID (we use atlasY)
+        // - Bit 28: horizontal flip
+        // - Bit 29: vertical flip
+        // - Bit 30: transpose (rare; not emitted by LDtk)
+        // Reference: observed in the provided "God Placement" TSCN output.
         this.ALT_MASK = 0x0000ffff;
-        this.BIT_FLIP_H = 1 << 29;
-        this.BIT_FLIP_V = 1 << 30;
-        this.BIT_TRANSPOSE = 1 << 31;
+        this.BIT_FLIP_H = 1 << 28;
+        this.BIT_FLIP_V = 1 << 29;
+        this.BIT_TRANSPOSE = 1 << 30;
     }
 
     /**
